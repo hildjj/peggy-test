@@ -1,0 +1,26 @@
+{
+  "name": "peggy-test",
+  "version": "0.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "peggy src/test_md.peggy -o lib/test_md.js --format es",
+    "lint": "eslint . --ext js"
+  },
+  "keywords": [],
+  "author": "Joe Hildebrand <joe-github@cursive.net>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "9.3.0",
+    "peggy": "file:../peggy",
+    "temp": "0.9.4"
+  },
+  "engines": {
+    "node": ">=0.12.20"
+  },
+  "devDependencies": {
+    "@peggyjs/eslint-config": "2.0.0",
+    "eslint": "8.18.0"
+  }
+}
