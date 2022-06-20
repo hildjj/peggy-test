@@ -1,0 +1,6 @@
+node_modules/
+test/
+.eslintrc.cjs
+.gitignore
+example/
+src/
