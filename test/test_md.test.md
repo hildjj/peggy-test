@@ -1,5 +1,6 @@
 ---
 source: ../src/test_md.peggy
+outDir: ../lib
 defaultRule: tests
 updated: 2022-06-21T16:59:46.221Z
 ---
