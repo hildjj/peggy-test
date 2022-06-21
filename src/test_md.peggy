@@ -20,13 +20,23 @@ test = input:input nl+ output:output? {
   return {input, output};
 }
 
-input = "Input" rule:rule? _ ":" nl+ src:source {
-  return {rule, src};
+input = "Input" rule:rule? _ ":" tags:tags nl+ src:source {
+  return {rule, ...tags, src};
 }
 
 rule = __ "to"i __ "rule"i __ "`" @IdentifierName "`"
 
 source = "```" nl @notSourceEnd nl "```"
+
+tags = tags:tag* { return Object.fromEntries(tags); }
+
+tag
+  = skip
+  / trace
+
+skip = _ "(" _ "skip"i ("ped"i / "ping"i)? _ ")" { return ["skip", true]; }
+
+trace = _ "(" _ "trace"i _ ")" { return ["trace", true]; }
 
 output = "Output" _ ":" nl+ @jsSource nl+
 
@@ -64,9 +74,9 @@ nl
   = "\n"
   / "\r\n"
 
-_ = Zs*
+_ = [ \t]*
 
-__ = Zs+
+__ = [ \t]+
 
 HexDigit
   = [0-9a-f]i
@@ -120,6 +130,3 @@ Nl = [\u16EE-\u16F0\u2160-\u2182\u2185-\u2188\u3007\u3021-\u3029\u3038-\u303A\uA
 
 // Punctuation, Connector
 Pc = [\u005F\u203F-\u2040\u2054\uFE33-\uFE34\uFE4D-\uFE4F\uFF3F]
-
-// Separator, Space
-Zs = [\u0020\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]

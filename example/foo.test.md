@@ -55,3 +55,15 @@ Error: Expected "a" or "b" but "c" found.
 1 | cde
   | ^
 ```
+
+# Skipping
+
+Input: (skipped)
+```
+bad
+```
+
+Input: (skip)
+```
+Not working yet
+```
