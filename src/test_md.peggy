@@ -17,7 +17,7 @@ section = title:title nl* tests:test+ {
 title = "#" _ @text nl
 
 test = input:input nl+ output:output? {
-  return {input, output};
+  return {input, output, loc: location()};
 }
 
 input = "Input" rule:rule? _ ":" tags:tags nl+ src:source {
@@ -35,6 +35,7 @@ tag
   / @trace @skip
   / s:skip { return [s]; }
   / t:trace { return [t]; }
+  / ""
 
 skip = _ "(" _ "skip"i ("ped"i / "ping"i)? _ ")" { return ["skip", true]; }
 

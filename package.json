@@ -16,6 +16,7 @@
   "dependencies": {
     "commander": "9.3.0",
     "peggy": "file:../peggy",
+    "tap": "16.3.0",
     "temp": "0.9.4"
   },
   "engines": {
