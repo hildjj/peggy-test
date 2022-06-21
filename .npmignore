@@ -5,3 +5,4 @@ test/
 example/
 src/
 coverage/
+.c8rc.json

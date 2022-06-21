@@ -28,11 +28,13 @@ rule = __ "to"i __ "rule"i __ "`" @IdentifierName "`"
 
 source = "```" nl @notSourceEnd nl "```"
 
-tags = tags:tag* { return Object.fromEntries(tags); }
+tags = tags:tag { return Object.fromEntries(tags); }
 
 tag
-  = skip
-  / trace
+  = @skip @trace
+  / @trace @skip
+  / s:skip { return [s]; }
+  / t:trace { return [t]; }
 
 skip = _ "(" _ "skip"i ("ped"i / "ping"i)? _ ")" { return ["skip", true]; }
 

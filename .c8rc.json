@@ -1,0 +1,9 @@
+{
+  "exclude": [
+    "coverage/**",
+    "**/*.d.ts"
+  ],
+  "reporter": [
+    "lcov"
+  ]
+}

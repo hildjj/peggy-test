@@ -1,7 +1,7 @@
 ---
 source: ../src/test_md.peggy
 defaultRule: tests
-updated: 2022-06-21T16:00:27.067Z
+updated: 2022-06-21T16:59:46.221Z
 ---
 
 # Tests for each rule
@@ -51,9 +51,55 @@ Input to rule `source`: (skip)
 
 ```
 
-Input to rule `tags`: (skip)
+Input to rule `tags`:
+```
+(trace) (skip)
 ```
 
+Output:
+```js
+{
+  skip: true,
+  trace: true
+}
+```
+
+Input to rule `tags`:
+```
+(skip)
+```
+
+Output:
+```js
+{
+  skip: true
+}
+```
+
+Input to rule `tags`:
+```
+(trace)
+```
+
+Output:
+```js
+{
+  trace: true
+}
+```
+
+Input to rule `tags`:
+```
+(skip) (trace) (skip)
+```
+
+Output:
+```js
+Error: Expected end of input but " " found.
+ --> Tests for each rule__Test_13:1:15
+  |
+1 | (skip) (trace) (skip)
+  |               ^
 ```
 
 Input to rule `tag`: (skip)
@@ -101,9 +147,14 @@ Input to rule `IdentifierPart`: (skip)
 
 ```
 
-Input to rule `UnicodeEscapeSequence`: (skip)
+Input to rule `UnicodeEscapeSequence`:
+```
+u263A
 ```
 
+Output:
+```js
+'☺'
 ```
 
 Input to rule `start`: (skip)
@@ -194,6 +245,11 @@ Input to rule `Mn`: (skip)
 Input to rule `Nd`:
 ```
 ٣
+```
+
+Output:
+```js
+'٣'
 ```
 
 Input to rule `Nl`:
