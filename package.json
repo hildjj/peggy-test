@@ -1,7 +1,7 @@
 {
   "name": "peggy-test",
   "version": "0.0.0",
-  "description": "",
+  "description": "Unit test peggy grammars",
   "main": "lib/index.js",
   "type": "module",
   "scripts": {
@@ -10,7 +10,16 @@
     "test": "bin/peggy-test.js test/test_md.test.md",
     "coverage": "c8 npm test"
   },
-  "keywords": [],
+  "bin": {
+    "peggy-test": "bin/peggy-test.js"
+  },
+  "keywords": [
+    "coverage",
+    "peggy",
+    "peg.js",
+    "test",
+    "unit test"
+  ],
   "author": "Joe Hildebrand <joe-github@cursive.net>",
   "license": "MIT",
   "dependencies": {

@@ -2,7 +2,7 @@
 source: ../src/test_md.peggy
 outDir: ../lib
 defaultRule: tests
-updated: 2022-06-21T16:59:46.221Z
+updated: 2022-06-21T23:13:03.760Z
 ---
 
 # Tests for each rule
@@ -14,12 +14,20 @@ Input to rule `tests`: (skip)
 
 Input to rule `meta`: (skip)
 ```
+```
+
+Input to rule `field`:
+```
+Something-Here: There
 
 ```
 
-Input to rule `field`: (skip)
-```
-
+Output:
+```js
+[
+  'Something-Here',
+  'There'
+]
 ```
 
 Input to rule `section`: (skip)
@@ -96,11 +104,11 @@ Input to rule `tags`:
 
 Output:
 ```js
-Error: Expected end of input but " " found.
- --> Tests for each rule__Test_13:1:15
+Error: Duplicate tag: (skip)
+ --> Tests for each rule__Test_13:1:1
   |
 1 | (skip) (trace) (skip)
-  |               ^
+  | ^^^^^^^^^^^^^^^^^^^^^
 ```
 
 Input to rule `tag`: (skip)

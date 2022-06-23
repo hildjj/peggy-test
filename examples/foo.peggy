@@ -1,3 +1,7 @@
+top
+  = foo
+  / bar
+
 foo
   = "a"
   / "b"

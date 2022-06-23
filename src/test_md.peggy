@@ -1,7 +1,7 @@
 // Parse a .test.md file
 
-tests = nl* meta:meta? nl* sections:section+ {
-  return {meta, sections}
+tests = nl* meta:meta? nl* intro:paragraph* sections:section+ {
+  return {meta, intro, sections}
 }
 
 meta = "---" _ nl fields:field* "---" _ nl {
@@ -10,42 +10,60 @@ meta = "---" _ nl fields:field* "---" _ nl {
 
 field = @$[a-z_.$-]i+ _ ":" _ @text nl
 
-section = title:title nl* tests:test+ {
-  return {title, tests};
+section = title:title nl* grafs:testOrText* {
+  return {title, grafs};
 }
 
-title = "#" _ @text nl
+testOrText
+  = test
+  / paragraph
+
+title = _ @$"#"+ _ @text nl
 
 test = input:input nl+ output:output? {
   return {input, output, loc: location()};
 }
 
-input = "Input" rule:rule? _ ":" tags:tags nl+ src:source {
-  return {rule, ...tags, src};
+input = "Input" rule:rule? _ ":" tags:tags nl+ src:code {
+  return {rule, tags, src:src.src, lang: src.lang};
 }
 
 rule = __ "to"i __ "rule"i __ "`" @IdentifierName "`"
 
-source = "```" nl @notSourceEnd nl "```"
-
-tags = tags:tag { return Object.fromEntries(tags); }
+tags = tags:tag* {
+  const unique = new Set();
+  let dup = null
+  if (tags.some(([k]) => (unique.has(k) && (dup = k)) || (unique.add(k) && false))) {
+    error(`Duplicate tag: (${dup})`)
+  }
+  return Object.fromEntries(tags);
+}
 
 tag
-  = @skip @trace
-  / @trace @skip
-  / s:skip { return [s]; }
-  / t:trace { return [t]; }
-  / ""
+  = skip
+  / trace
 
 skip = _ "(" _ "skip"i ("ped"i / "ping"i)? _ ")" { return ["skip", true]; }
 
 trace = _ "(" _ "trace"i _ ")" { return ["trace", true]; }
 
-output = "Output" _ ":" nl+ @jsSource nl+
+output = "Output" _ ":" nl+ @code nl+
 
-jsSource = "```js" nl @notSourceEnd nl "```"
+code
+  = marks:backticks lang:IdentifierName? nl src:(@notSourceEnd nl)? backticks {
+    return {marks, lang, src};
+  }
+  / marks:tildes lang:IdentifierName? nl src:(@notTildeEnd nl)? tildes {
+    return {marks, lang, src};
+  }
+
+backticks = "```"
+tildes = "~~~"
+
+paragraph = @$(!(_ "#") (!(nl nl) .)+) nl nl+
 
 notSourceEnd = $(!(nl "```") .)*
+notTildeEnd = $(!(nl "~~~") .)*
 
 IdentifierName "identifier"
   = $(IdentifierStart tail:IdentifierPart*)
@@ -73,7 +91,7 @@ start = "```" lang:$[a-z0-9.-]* _ nl
 
 text = $[^\r\n]*
 
-nl
+nl "newline"
   = "\n"
   / "\r\n"
 
