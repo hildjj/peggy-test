@@ -25,7 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "commander": "9.3.0",
-    "peggy": "file:../peggy",
+    "peggy": "github:peggyjs/peggy",
     "tap": "16.3.0",
     "temp": "0.9.4"
   },
