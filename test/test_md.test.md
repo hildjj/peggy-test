@@ -105,7 +105,7 @@ Input to rule `tags`:
 Output:
 ```js
 Error: Duplicate tag: (skip)
- --> Tests for each rule__Test_13:1:1
+ --> Tests for each rule__Test_12:1:1
   |
 1 | (skip) (trace) (skip)
   | ^^^^^^^^^^^^^^^^^^^^^
