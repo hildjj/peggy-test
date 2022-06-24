@@ -7,7 +7,7 @@
   "scripts": {
     "build": "peggy src/test_md.peggy -o lib/test_md.js --format es",
     "lint": "eslint . --ext js,mjs",
-    "test": "bin/peggy-test.js test/test_md.test.md",
+    "test": "node bin/peggy-test.js test/test_md.test.md",
     "coverage": "c8 npm test",
     "ci": "npm run lint && npm run coverage"
   },
