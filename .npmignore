@@ -9,3 +9,4 @@ examples/
 node_modules/
 src/
 test/
+.bs-config.cjs

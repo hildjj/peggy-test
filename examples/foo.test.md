@@ -2,7 +2,7 @@
 title: Foo
 source: foo.peggy
 outDir: .
-defaultRule: foo
+defaultRule: top
 updated: 2022-06-22T22:29:32.239Z
 ---
 
@@ -23,6 +23,18 @@ Output:
 'a'
 ```
 
+Start at the top to get backtracking in the trace.
+
+Input: (trace)
+```
+120
+```
+
+Output:
+```js
+120n
+```
+
 This is why there are paragraphs.  To **explain** things.  There might be lots
 of lines that all go together.
 
@@ -38,7 +50,7 @@ Output:
 
 # Other rules
 
-Input to rule `bar`: (trace)
+Input to rule `bar`:
 ```
 120
 ```
@@ -57,7 +69,7 @@ cde
 
 Output:
 ```
-Error: Expected "a" or "b" but "c" found.
+Error: Expected "a", "b", [ \t], or [0-9] but "c" found.
  --> Errors__Test_1:1:1
   |
 1 | cde
