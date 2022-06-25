@@ -1,6 +1,7 @@
-top
+top "default rule"
   = foo
   / bar
+  / ticks
 
 foo
   = _ @"a"
@@ -8,5 +9,7 @@ foo
 
 bar
   = n:$[0-9]+ { return BigInt(n); }
+
+ticks = "```"
 
 _ = [ \t]*

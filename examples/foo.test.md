@@ -69,7 +69,7 @@ cde
 
 Output:
 ```
-Error: Expected "a", "b", [ \t], or [0-9] but "c" found.
+Error: Expected default rule but "c" found.
  --> Errors__Test_1:1:1
   |
 1 | cde
@@ -92,4 +92,11 @@ Not working yet
 
 Input:
 ~~~
+```
 ~~~
+
+Output:
+~~~js
+'```'
+~~~
+

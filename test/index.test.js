@@ -1,23 +1,33 @@
 import * as fsb from "fs";
-import { generateFile } from "../lib/index.js";
 import path from "path";
 import tap from "libtap";
+import url from "url";
 
 const fs = fsb.promises;
 
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 async function metaTest() {
+  const originalFoo = await fs.readFile(
+    path.resolve(__dirname, "..", "examples", "foo.test.md"),
+    "utf8"
+  );
   const dir = tap.testdir({
     "foo.peggy": tap.fixture(
       "symlink",
       path.join("..", "..", "examples", "foo.peggy")
     ),
+    "foo.test.md": originalFoo,
   });
 
-  const testFile = path.join(dir, "foo.test.md");
-  await generateFile({
-    generate: path.join(dir, "foo.peggy"),
+  const testFile = path.join(dir, "foo-g.test.md");
+  await tap.spawn(process.argv0, [
+    "bin/peggy-test.js",
+    "-g",
+    path.join(dir, "foo.peggy"),
     testFile,
-  });
+  ]);
 
   const testTxt = await fs.readFile(testFile, "utf8");
   tap.match(testTxt, /^---/, "wrote test file");
@@ -31,6 +41,25 @@ async function metaTest() {
     "bin/peggy-test.js",
     "examples/foo.test.md",
   ]);
+
+  const updateFile = path.join(dir, "foo.test.md");
+  await tap.spawn(process.argv0, [
+    "bin/peggy-test.js",
+    "-u",
+    updateFile,
+  ]);
+
+  const updatedFoo = await fs.readFile(
+    updateFile,
+    "utf8"
+  );
+
+  const updatedRe = /^updated: [^\r\n]+\n/m;
+  tap.equal(
+    updatedFoo.replace(updatedRe, ""),
+    originalFoo.replace(updatedRe, ""),
+    "Update doesn't change anything but date"
+  );
 
   tap.end();
 }
