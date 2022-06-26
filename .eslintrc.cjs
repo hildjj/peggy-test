@@ -22,6 +22,9 @@ module.exports = {
           exports: "always-multiline",
           functions: "never",
         }],
+        "capitalized-comments": ["error", "always", {
+          "ignorePattern": "c8",
+        }]
       },
     },
   ],
