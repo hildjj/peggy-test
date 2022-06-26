@@ -3,7 +3,7 @@ title: Foo
 source: foo.peggy
 outDir: .
 defaultRule: top
-updated: 2022-06-22T22:29:32.239Z
+updated: 2022-06-26T20:31:42.549Z
 ---
 
 Some intro expository text might go here.
@@ -99,4 +99,32 @@ Output:
 ~~~js
 '```'
 ~~~
+
+# 
+# Empty section
+# 
+
+This test is skipped, and has output:
+
+Input: (skip)
+```
+a
+```
+
+Output:
+```js
+'a'
+```
+
+A non-grammar exception:
+
+Input:
+```
+except
+```
+
+Output:
+```
+boop
+```
 

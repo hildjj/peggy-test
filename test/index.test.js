@@ -42,6 +42,11 @@ async function metaTest() {
     "examples/foo.test.md",
   ]);
 
+  await tap.spawn(process.argv0, [
+    "bin/peggy-test.js",
+    "test/todo.test.md",
+  ]);
+
   const updateFile = path.join(dir, "foo.test.md");
   await tap.spawn(process.argv0, [
     "bin/peggy-test.js",

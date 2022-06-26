@@ -2,7 +2,7 @@
 source: ../src/test_md.peggy
 outDir: ../lib
 defaultRule: tests
-updated: 2022-06-21T23:13:03.760Z
+updated: 2022-06-26T19:19:47.269Z
 ---
 
 # Tests for each rule
@@ -103,9 +103,9 @@ Input to rule `tags`:
 ```
 
 Output:
-```js
+```
 Error: Duplicate tag: (skip)
- --> Tests for each rule__Test_12:1:1
+ --> Tests for each rule__Test_13:1:1
   |
 1 | (skip) (trace) (skip)
   | ^^^^^^^^^^^^^^^^^^^^^

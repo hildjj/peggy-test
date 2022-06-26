@@ -10,12 +10,13 @@ meta = "---" _ nl fields:field* "---" _ nl {
 
 field = @$[a-z_.$-]i+ _ ":" _ @text nl
 
-section = title:title nl* grafs:testOrText* {
+section = title:title grafs:testOrText* {
   return {title, grafs};
 }
 
 testOrText
   = test
+  / nl
   / paragraph
 
 title = _ @$"#"+ _ @text nl
@@ -25,7 +26,7 @@ test = input:input nl+ output:output? {
 }
 
 input = "Input" rule:rule? _ ":" tags:tags nl+ src:code {
-  return {rule, tags, src:src.src, lang: src.lang};
+  return {rule, tags, ...src};
 }
 
 rule = __ "to"i __ "rule"i __ "`" @IdentifierName "`"
@@ -49,18 +50,25 @@ trace = _ "(" _ "trace"i _ ")" { return ["trace", true]; }
 
 output = "Output" _ ":" nl+ @code nl+
 
+// Explicitly check for null, so that we don't skip a set of ticks
 code
-  = marks:backticks lang:IdentifierName? nl src:(@notSourceEnd nl)? backticks {
+  = marks:backticks lang:IdentifierName? nl backticks {
+    return { marks, lang, src: null }
+  }
+  / marks:tildes lang:IdentifierName? nl tildes {
+    return { marks, lang, src: null }
+  }
+  / marks:backticks lang:IdentifierName? nl src:(@notSourceEnd nl) backticks {
     return {marks, lang, src};
   }
-  / marks:tildes lang:IdentifierName? nl src:(@notTildeEnd nl)? tildes {
+  / marks:tildes lang:IdentifierName? nl src:(@notTildeEnd nl) tildes {
     return {marks, lang, src};
   }
 
 backticks = "```"
 tildes = "~~~"
 
-paragraph = @$(!(_ "#") (!(nl nl) .)+) nl nl+
+paragraph = @$(!(_ "#") (!(nl nl) .)+ nl nl+)
 
 notSourceEnd = $(!(nl "```") .)*
 notTildeEnd = $(!(nl "~~~") .)*
