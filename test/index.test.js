@@ -9,7 +9,7 @@ const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function metaTest() {
-  const originalFoo = await fs.readFile(
+  let originalFoo = await fs.readFile(
     path.resolve(__dirname, "..", "examples", "foo.test.md"),
     "utf8"
   );
@@ -49,12 +49,16 @@ async function metaTest() {
     updateFile,
   ]);
 
-  const updatedFoo = await fs.readFile(
+  let updatedFoo = await fs.readFile(
     updateFile,
     "utf8"
   );
 
+  const eolRe = /\r?\n/g;
   const updatedRe = /^updated: [^\r\n]+\n/m;
+  originalFoo = originalFoo.replace(eolRe, "\n");
+  updatedFoo = updatedFoo.replace(eolRe, "\n");
+
   tap.equal(
     updatedFoo.replace(updatedRe, ""),
     originalFoo.replace(updatedRe, ""),
