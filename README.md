@@ -6,25 +6,16 @@ probably like to be able to see the code coverage of those tests as well.
 
 ## Installation
 
-Note: this won't work until the next version of Peggy is released, this
-package is updated, then published:
+Note: this won't work until the package is published for the first time:
 
 ```bash
 npm install peggy-test
 ```
 
-For now, check this out next to your Peggy repo:
-
-```bash
-git clone https://github.com/peggyjs/peggy.git
-cd peggy
-npm install
-cd ..
-git clone https://github.com/hildjj/peggy-test.git
-```
-
 Further note: I'm working on this in a personal repo, but if it's interesting
 to the Peggy community, I'll move it to the Peggy organization on GitHub.
+We'll make that call before we publish the first time, so we don't have to
+change owners.
 
 ## Basic Approach
 
@@ -259,4 +250,4 @@ Here are the currently supported tags:
 | (skip) | Skip this test. |
 | (trace) | Turn on tracing for this test.  It is sometimes useful to trace-debug a single test at a time. |
 
-[![Tests](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml/badge.svg)](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml)
+[![Tests](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml)

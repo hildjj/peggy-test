@@ -9,6 +9,7 @@ const opts = program
   .allowExcessArguments(false)
   .option("-u, --update", "Update the test file with the current test outputs")
   .option("-g, --generate <sourceGrammar>", "Generate a new test file from a grammar")
+  .option("-q, --quiet", "Output as liitle info as possible")
   .parse()
   .opts();
 
