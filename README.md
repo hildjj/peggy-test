@@ -104,6 +104,7 @@ Options:
   -u, --update                    Update the test file with the current test
                                   outputs
   -g, --generate <sourceGrammar>  Generate a new test file from a grammar
+  -q, --quiet                     Output as liitle info as possible
   -h, --help                      display help for command
 ```
 
@@ -251,3 +252,4 @@ Here are the currently supported tags:
 | (trace) | Turn on tracing for this test.  It is sometimes useful to trace-debug a single test at a time. |
 
 [![Tests](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml)
+[![codecov](https://codecov.io/gh/hildjj/peggy-test/branch/main/graph/badge.svg?token=P7RQVIQRO1)](https://codecov.io/gh/hildjj/peggy-test)
