@@ -2,8 +2,77 @@
 source: ../src/test_md.peggy
 outDir: ../lib
 defaultRule: tests
-updated: 2022-06-26T19:19:47.269Z
+updated: 2022-06-27T21:18:08.266Z
 ---
+
+# Tests for the default rul
+
+Input:
+~~~
+---
+title: simple
+---
+# A simple test
+
+Input:
+```
+foo
+```
+
+Output:
+```
+'foo'
+```
+
+~~~
+
+Output:
+~~~js
+{
+  intro: [],
+  meta: {
+    title: 'simple'
+  },
+  sections: [
+    {
+      grafs: [
+        '\n',
+        {
+          input: {
+            lang: null,
+            marks: '```',
+            rule: null,
+            src: 'foo',
+            tags: {}
+          },
+          loc: {
+            end: {
+              column: 1,
+              line: 15,
+              offset: 81
+            },
+            source: 'Tests for the default rul__Test_1',
+            start: {
+              column: 1,
+              line: 6,
+              offset: 39
+            }
+          },
+          output: {
+            lang: null,
+            marks: '```',
+            src: "'foo'"
+          }
+        }
+      ],
+      title: [
+        '#',
+        ' A simple test'
+      ]
+    }
+  ]
+}
+~~~
 
 # Tests for each rule
 
@@ -131,9 +200,50 @@ Input to rule `output`: (skip)
 
 ```
 
-Input to rule `jsSource`: (skip)
+Input to rule `code`:
+```
+~~~
+~~~
 ```
 
+Output:
+```js
+{
+  lang: null,
+  marks: '~~~',
+  src: null
+}
+```
+
+Input to rule `code`:
+~~~
+```
+```
+~~~
+
+Output:
+~~~js
+{
+  lang: null,
+  marks: '```',
+  src: null
+}
+~~~
+
+Input to rule `code`:
+```
+~~~js
+'a'
+~~~
+```
+
+Output:
+```js
+{
+  lang: 'js',
+  marks: '~~~',
+  src: "'a'"
+}
 ```
 
 Input to rule `notSourceEnd`: (skip)
@@ -280,3 +390,4 @@ Output:
 ```js
 '_'
 ```
+
