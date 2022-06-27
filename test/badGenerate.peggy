@@ -1,0 +1,3 @@
+// Invalid format grammar
+
+foo =

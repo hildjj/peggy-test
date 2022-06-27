@@ -250,4 +250,4 @@ Here are the currently supported tags:
 | (skip) | Skip this test. |
 | (trace) | Turn on tracing for this test.  It is sometimes useful to trace-debug a single test at a time. |
 
-[![Tests](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml/badge.svg)](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml)
+[![Tests](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml)

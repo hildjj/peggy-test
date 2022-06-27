@@ -19,7 +19,7 @@ testOrText
   / nl
   / paragraph
 
-title = _ @$"#"+ _ @text nl
+title = _ @$"#"+ @text nl
 
 test = input:input nl+ output:output? {
   return {input, output, loc: location()};

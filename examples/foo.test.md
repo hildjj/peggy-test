@@ -100,9 +100,9 @@ Output:
 '```'
 ~~~
 
-# 
+#
 # Empty section
-# 
+#
 
 This test is skipped, and has output:
 
