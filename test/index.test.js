@@ -10,6 +10,12 @@ const node = process.execPath;
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const eolRe = /\r?\n/g;
+const updatedRe = /^updated: [^\r\n]+\n/m;
+function normalize(str) {
+  return str.replace(updatedRe, "").replace(eolRe, "\n");
+}
+
 async function metaTest() {
   tap.throws(() => outputCodeBlock(null, {
     src: "```",
@@ -25,7 +31,7 @@ async function metaTest() {
     marks: "~~~",
   }));
 
-  let originalFoo = await fs.readFile(
+  const originalFoo = await fs.readFile(
     path.resolve(__dirname, "..", "examples", "foo.test.md"),
     "utf8"
   );
@@ -47,6 +53,22 @@ async function metaTest() {
 
   const testTxt = await fs.readFile(testFile, "utf8");
   tap.match(testTxt, /^---/, "wrote test file");
+
+  // Can't overwite without force
+  await tap.spawn(node, [
+    "bin/peggy-test.js",
+    "-g",
+    path.join(dir, "foo.peggy"),
+    testFile,
+  ], { expectFail: true });
+
+  await tap.spawn(node, [
+    "bin/peggy-test.js",
+    "--force",
+    "-g",
+    path.join(dir, "foo.peggy"),
+    testFile,
+  ]);
 
   await tap.spawn(node, [
     "bin/peggy-test.js",
@@ -93,27 +115,34 @@ async function metaTest() {
     "DOES__NOT___EXIST/badGenerate.test.md",
   ], { expectFail: true });
 
+  const normOriginal = normalize(originalFoo);
   const updateFile = path.join(dir, "foo.test.md");
+
   await tap.spawn(node, [
     "bin/peggy-test.js",
     "-u",
     updateFile,
   ]);
 
-  let updatedFoo = await fs.readFile(
-    updateFile,
-    "utf8"
+  const updatedFoo = normalize(await fs.readFile(updateFile, "utf8"));
+  tap.equal(
+    updatedFoo,
+    normOriginal,
+    "Update doesn't change anything but date"
   );
 
-  const eolRe = /\r?\n/g;
-  const updatedRe = /^updated: [^\r\n]+\n/m;
-  originalFoo = originalFoo.replace(eolRe, "\n");
-  updatedFoo = updatedFoo.replace(eolRe, "\n");
+  await tap.spawn(node, [
+    "bin/peggy-test.js",
+    "--force",
+    "-u",
+    updateFile,
+  ]);
 
+  const forceUpdatedFoo = normalize(await fs.readFile(updateFile, "utf8"));
   tap.equal(
-    updatedFoo.replace(updatedRe, ""),
-    originalFoo.replace(updatedRe, ""),
-    "Update doesn't change anything but date"
+    forceUpdatedFoo,
+    normOriginal,
+    "Force update doesn't change anything but date"
   );
 
   tap.end();

@@ -1,15 +1,19 @@
 #!/usr/bin/env node
 
+import { Command, Option } from "commander";
 import { generateFile, testFile } from "../lib/index.js";
-import { Command } from "commander";
 
 const program = new Command();
 const opts = program
   .argument("<testFile>", "The file to test")
   .allowExcessArguments(false)
-  .option("-u, --update", "Update the test file with the current test outputs")
-  .option("-g, --generate <sourceGrammar>", "Generate a new test file from a grammar")
+  .option("-f, --force", "With --update, updates all tests, not just ones without output already specified.  With --generate, overwrites a file if it already exists.  With neither, un-skips all skipped tests.")
+  .addOption(new Option(
+    "-g, --generate <sourceGrammar>",
+    "Generate a new test file from a grammar"
+  ).conflicts("update"))
   .option("-q, --quiet", "Output as liitle info as possible")
+  .option("-u, --update", "Update the test file with the current test outputs")
   .parse()
   .opts();
 

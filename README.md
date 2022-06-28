@@ -79,17 +79,24 @@ Test stubs can be created from your grammar:
 peggy-test -g <grammar file> <test file>
 ```
 
-This currently overwrites everything in the test file, if it exists, with one
-blank and skipped test for each rule in your grammar.
+If the test file does not exist, it creates one with a skipped test for each
+rule in your grammar.  If you want to overwrite an existing test file, use the
+`--force` flag.
 
 ## Updating test output
 
 It is tedious to calculate the expected output for each test input.  Instead,
-you can update all of the output blocks in a test file with the current output
-of the grammar:
+you add output blocks to all of the tests missing them in a test file with the
+current output of the grammar:
 
 ```bash
-peggy-test -u <test file>
+peggy-test --update <test file>
+```
+
+If you want to update *all* of the tests, use `--force`:
+
+```bash
+peggy-test --force --update <test file>
 ```
 
 ## Command Line
@@ -101,10 +108,15 @@ Arguments:
   testFile                        The file to test
 
 Options:
-  -u, --update                    Update the test file with the current test
-                                  outputs
+  -f, --force                     With --update, updates all tests, not just
+                                  ones without output already specified.  With
+                                  --generate, overwrites a file if it already
+                                  exists.  With neither, un-skips all skipped
+                                  tests.
   -g, --generate <sourceGrammar>  Generate a new test file from a grammar
   -q, --quiet                     Output as liitle info as possible
+  -u, --update                    Update the test file with the current test
+                                  outputs
   -h, --help                      display help for command
 ```
 
@@ -248,7 +260,7 @@ Here are the currently supported tags:
 
 | Name | Meaning |
 |----- | ------- |
-| (skip) | Skip this test. |
+| (skip) | Skip this test, unless the `--force` flag is used. |
 | (trace) | Turn on tracing for this test.  It is sometimes useful to trace-debug a single test at a time. |
 
 [![Tests](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml)
