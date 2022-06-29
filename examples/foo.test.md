@@ -3,7 +3,7 @@ title: Foo
 source: foo.peggy
 outDir: .
 defaultRule: top
-updated: 2022-06-26T20:31:42.549Z
+updated: 2022-06-28T16:16:17.040Z
 ---
 
 Some intro expository text might go here.
@@ -70,7 +70,7 @@ cde
 Output:
 ```
 Error: Expected default rule but "c" found.
- --> Errors__Test_1:1:1
+ --> foo.test.md:65, offset from test start:1:1
   |
 1 | cde
   | ^
