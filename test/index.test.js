@@ -15,6 +15,22 @@ function normalize(str) {
   return str.replace(updatedRe, "");
 }
 
+// Run update, re-read the file, and make sure nothing has changed
+// but the updated date.
+async function checkUpdate(dir, name, originalText, ...args) {
+  const normOriginal = normalize(originalText);
+  const updateFile = path.join(dir, name);
+
+  await tap.spawn(node, ["bin/peggy-test.js", "-u", ...args, updateFile]);
+
+  const normUpdated = normalize(await fs.readFile(updateFile, "utf8"));
+  tap.equal(
+    normUpdated,
+    normOriginal,
+    `${name}: Update doesn't change anything but date`
+  );
+}
+
 async function metaTest() {
   tap.throws(() => outputCodeBlock(null, {
     src: "```",
@@ -34,12 +50,21 @@ async function metaTest() {
     path.resolve(__dirname, "..", "examples", "foo.test.md"),
     "utf8"
   );
+  const originalOnly = await fs.readFile(
+    path.resolve(__dirname, "..", "test", "only.test.md"),
+    "utf8"
+  );
   const dir = tap.testdir({
     "foo.peggy": tap.fixture(
       "symlink",
       path.join("..", "..", "examples", "foo.peggy")
     ),
+    "bar.peggy": tap.fixture(
+      "symlink",
+      path.join("..", "bar.peggy")
+    ),
     "foo.test.md": originalFoo,
+    "only.test.md": originalOnly,
   });
 
   const testFile = path.join(dir, "foo-g.test.md");
@@ -109,40 +134,19 @@ async function metaTest() {
 
   await tap.spawn(node, [
     "bin/peggy-test.js",
+    "test/only.test.md",
+  ]);
+
+  await tap.spawn(node, [
+    "bin/peggy-test.js",
     "-g",
     path.join(dir, "foo.peggy"),
     "DOES__NOT___EXIST/badGenerate.test.md",
   ], { expectFail: true });
 
-  const normOriginal = normalize(originalFoo);
-  const updateFile = path.join(dir, "foo.test.md");
-
-  await tap.spawn(node, [
-    "bin/peggy-test.js",
-    "-u",
-    updateFile,
-  ]);
-
-  const updatedFoo = normalize(await fs.readFile(updateFile, "utf8"));
-  tap.equal(
-    updatedFoo,
-    normOriginal,
-    "Update doesn't change anything but date"
-  );
-
-  await tap.spawn(node, [
-    "bin/peggy-test.js",
-    "--force",
-    "-u",
-    updateFile,
-  ]);
-
-  const forceUpdatedFoo = normalize(await fs.readFile(updateFile, "utf8"));
-  tap.equal(
-    forceUpdatedFoo,
-    normOriginal,
-    "Force update doesn't change anything but date"
-  );
+  await checkUpdate(dir, "only.test.md", originalOnly);
+  await checkUpdate(dir, "foo.test.md", originalFoo);
+  await checkUpdate(dir, "foo.test.md", originalFoo, "--force");
 
   tap.end();
 }

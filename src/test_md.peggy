@@ -40,13 +40,12 @@ tags = tags:tag* {
   return Object.fromEntries(tags);
 }
 
-tag
-  = skip
-  / trace
+tag = _ "(" _ t:tagName _ ")" { return [t.toLowerCase(), true]; }
 
-skip = _ "(" _ "skip"i ("ped"i / "ping"i)? _ ")" { return ["skip", true]; }
-
-trace = _ "(" _ "trace"i _ ")" { return ["trace", true]; }
+tagName
+  = "only"i
+  / "skip"i
+  / "trace"i
 
 output = "Output" _ ":" nl+ @code nl+
 

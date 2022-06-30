@@ -1,6 +1,6 @@
 import * as fsb from "fs";
-import peggy from "../vendor/peggy.min.cjs";
 import path from "path";
+import peggy from "../vendor/peggy.min.cjs";
 import url from "url";
 
 const fs = fsb.promises;
