@@ -29,7 +29,7 @@ module.exports = {
   "port": 5012,
   "ghostMode": false,
   "logLevel": "info",
-  "logPrefix": "peggyjs.org",
+  "logPrefix": "peggy-test",
   "logConnections": false,
   "logFileChanges": true,
   "logSnippet": true,

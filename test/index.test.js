@@ -10,10 +10,9 @@ const node = process.execPath;
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const eolRe = /\r?\n/g;
 const updatedRe = /^updated: [^\r\n]+\n/m;
 function normalize(str) {
-  return str.replace(updatedRe, "").replace(eolRe, "\n");
+  return str.replace(updatedRe, "");
 }
 
 async function metaTest() {
