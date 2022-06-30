@@ -1,12 +1,14 @@
+.bs-config.cjs
 .c8rc.json
 .editorconfig
 .eslintrc.cjs
 .gitattributes
 .github/
 .gitignore
+.nyc_output/
 coverage/
 examples/
 node_modules/
 src/
 test/
-.bs-config.cjs
+tools/
