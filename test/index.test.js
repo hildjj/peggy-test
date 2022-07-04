@@ -147,11 +147,11 @@ async function metaTest() {
   ]);
 
   await tap.spawn(node, [
-    "bin/peggy-test.js",
+    "../../bin/peggy-test.js",
     "-g",
-    path.join(dir, "foo.peggy"),
+    path.join("examples", "foo.peggy"),
     "DOES__NOT___EXIST/badGenerate.test.md",
-  ], { expectFail: true });
+  ], { cwd: dir, expectFail: true });
 
   await checkUpdate(dir, "test/only.test.md", originalOnly);
   await checkUpdate(dir, "examples/foo.test.md", originalFoo);
