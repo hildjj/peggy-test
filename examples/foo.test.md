@@ -3,7 +3,7 @@ title: Foo
 source: foo.peggy
 outDir: .
 defaultRule: top
-updated: 2022-06-28T16:16:17.040Z
+updated: 2022-07-04T20:18:38.179Z
 ---
 
 Some intro expository text might go here.
@@ -70,10 +70,10 @@ cde
 Output:
 ```
 Error: Expected default rule but "c" found.
- --> foo.test.md:65, offset from test start:1:1
-  |
-1 | cde
-  | ^
+ --> examples/foo.test.md:67:1
+   |
+67 | cde
+   | ^
 ```
 
 # Skipping

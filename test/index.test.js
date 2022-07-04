@@ -19,11 +19,15 @@ function normalize(str) {
 // but the updated date.
 async function checkUpdate(dir, name, originalText, ...args) {
   const normOriginal = normalize(originalText);
-  const updateFile = path.join(dir, name);
 
-  await tap.spawn(node, ["bin/peggy-test.js", "-u", ...args, updateFile]);
+  await tap.spawn(node, [
+    "../../bin/peggy-test.js",
+    "-u",
+    ...args,
+    name,
+  ], { cwd: dir });
 
-  const normUpdated = normalize(await fs.readFile(updateFile, "utf8"));
+  const normUpdated = normalize(await fs.readFile(path.join(dir, name), "utf8"));
   tap.equal(
     normUpdated,
     normOriginal,
@@ -55,44 +59,49 @@ async function metaTest() {
     "utf8"
   );
   const dir = tap.testdir({
-    "foo.peggy": tap.fixture(
-      "symlink",
-      path.join("..", "..", "examples", "foo.peggy")
-    ),
-    "bar.peggy": tap.fixture(
-      "symlink",
-      path.join("..", "bar.peggy")
-    ),
-    "foo.test.md": originalFoo,
-    "only.test.md": originalOnly,
+    examples: {
+      "foo.peggy": tap.fixture(
+        "symlink",
+        path.join("..", "..", "..", "examples", "foo.peggy")
+      ),
+      "foo.test.md": originalFoo,
+    },
+    test: {
+      "bar.peggy": tap.fixture(
+        "symlink",
+        path.join("..", "..", "bar.peggy")
+      ),
+      "only.test.md": originalOnly,
+    },
   });
 
-  const testFile = path.join(dir, "foo-g.test.md");
+  const testFile = path.join("examples", "foo-g.test.md");
   await tap.spawn(node, [
-    "bin/peggy-test.js",
+    "../../bin/peggy-test.js",
     "-g",
-    path.join(dir, "foo.peggy"),
+    path.join("examples", "foo.peggy"),
     testFile,
-  ]);
+  ], { cwd: dir });
 
-  const testTxt = await fs.readFile(testFile, "utf8");
+  const testTxt = await fs.readFile(path.join(dir, testFile), "utf8");
   tap.match(testTxt, /^---/, "wrote test file");
 
   // Can't overwite without force
   await tap.spawn(node, [
-    "bin/peggy-test.js",
+    "../../bin/peggy-test.js",
+    "-q",
     "-g",
-    path.join(dir, "foo.peggy"),
+    path.join("examples", "foo.peggy"),
     testFile,
-  ], { expectFail: true });
+  ], { cwd: dir, expectFail: true });
 
   await tap.spawn(node, [
-    "bin/peggy-test.js",
+    "../../bin/peggy-test.js",
     "--force",
     "-g",
-    path.join(dir, "foo.peggy"),
+    path.join("examples", "foo.peggy"),
     testFile,
-  ]);
+  ], { cwd: dir });
 
   await tap.spawn(node, [
     "bin/peggy-test.js",
@@ -144,9 +153,9 @@ async function metaTest() {
     "DOES__NOT___EXIST/badGenerate.test.md",
   ], { expectFail: true });
 
-  await checkUpdate(dir, "only.test.md", originalOnly);
-  await checkUpdate(dir, "foo.test.md", originalFoo);
-  await checkUpdate(dir, "foo.test.md", originalFoo, "--force");
+  await checkUpdate(dir, "test/only.test.md", originalOnly);
+  await checkUpdate(dir, "examples/foo.test.md", originalFoo);
+  await checkUpdate(dir, "examples/foo.test.md", originalFoo, "--force");
 
   tap.end();
 }
