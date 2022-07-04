@@ -3,6 +3,7 @@
     "lib/test_md.js",
     "coverage/**",
     "packages/*/test{,s}/**",
+    "vendor/**",
     "**/*.d.ts",
     "test{,s}/**",
     "**/__tests__/**",
