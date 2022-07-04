@@ -15,6 +15,26 @@ function normalize(str) {
   return str.replace(updatedRe, "");
 }
 
+// Run update, re-read the file, and make sure nothing has changed
+// but the updated date.
+async function checkUpdate(dir, name, originalText, ...args) {
+  const normOriginal = normalize(originalText);
+
+  await tap.spawn(node, [
+    "../../bin/peggy-test.js",
+    "-u",
+    ...args,
+    name,
+  ], { cwd: dir });
+
+  const normUpdated = normalize(await fs.readFile(path.join(dir, name), "utf8"));
+  tap.equal(
+    normUpdated,
+    normOriginal,
+    `${name}: Update doesn't change anything but date`
+  );
+}
+
 async function metaTest() {
   tap.throws(() => outputCodeBlock(null, {
     src: "```",
@@ -34,40 +54,54 @@ async function metaTest() {
     path.resolve(__dirname, "..", "examples", "foo.test.md"),
     "utf8"
   );
+  const originalOnly = await fs.readFile(
+    path.resolve(__dirname, "..", "test", "only.test.md"),
+    "utf8"
+  );
   const dir = tap.testdir({
-    "foo.peggy": tap.fixture(
-      "symlink",
-      path.join("..", "..", "examples", "foo.peggy")
-    ),
-    "foo.test.md": originalFoo,
+    examples: {
+      "foo.peggy": tap.fixture(
+        "symlink",
+        path.join("..", "..", "..", "examples", "foo.peggy")
+      ),
+      "foo.test.md": originalFoo,
+    },
+    test: {
+      "bar.peggy": tap.fixture(
+        "symlink",
+        path.join("..", "..", "bar.peggy")
+      ),
+      "only.test.md": originalOnly,
+    },
   });
 
-  const testFile = path.join(dir, "foo-g.test.md");
+  const testFile = path.join("examples", "foo-g.test.md");
   await tap.spawn(node, [
-    "bin/peggy-test.js",
+    "../../bin/peggy-test.js",
     "-g",
-    path.join(dir, "foo.peggy"),
+    path.join("examples", "foo.peggy"),
     testFile,
-  ]);
+  ], { cwd: dir });
 
-  const testTxt = await fs.readFile(testFile, "utf8");
+  const testTxt = await fs.readFile(path.join(dir, testFile), "utf8");
   tap.match(testTxt, /^---/, "wrote test file");
 
   // Can't overwite without force
   await tap.spawn(node, [
-    "bin/peggy-test.js",
+    "../../bin/peggy-test.js",
+    "-q",
     "-g",
-    path.join(dir, "foo.peggy"),
+    path.join("examples", "foo.peggy"),
     testFile,
-  ], { expectFail: true });
+  ], { cwd: dir, expectFail: true });
 
   await tap.spawn(node, [
-    "bin/peggy-test.js",
+    "../../bin/peggy-test.js",
     "--force",
     "-g",
-    path.join(dir, "foo.peggy"),
+    path.join("examples", "foo.peggy"),
     testFile,
-  ]);
+  ], { cwd: dir });
 
   await tap.spawn(node, [
     "bin/peggy-test.js",
@@ -109,40 +143,19 @@ async function metaTest() {
 
   await tap.spawn(node, [
     "bin/peggy-test.js",
+    "test/only.test.md",
+  ]);
+
+  await tap.spawn(node, [
+    "../../bin/peggy-test.js",
     "-g",
-    path.join(dir, "foo.peggy"),
+    path.join("examples", "foo.peggy"),
     "DOES__NOT___EXIST/badGenerate.test.md",
-  ], { expectFail: true });
+  ], { cwd: dir, expectFail: true });
 
-  const normOriginal = normalize(originalFoo);
-  const updateFile = path.join(dir, "foo.test.md");
-
-  await tap.spawn(node, [
-    "bin/peggy-test.js",
-    "-u",
-    updateFile,
-  ]);
-
-  const updatedFoo = normalize(await fs.readFile(updateFile, "utf8"));
-  tap.equal(
-    updatedFoo,
-    normOriginal,
-    "Update doesn't change anything but date"
-  );
-
-  await tap.spawn(node, [
-    "bin/peggy-test.js",
-    "--force",
-    "-u",
-    updateFile,
-  ]);
-
-  const forceUpdatedFoo = normalize(await fs.readFile(updateFile, "utf8"));
-  tap.equal(
-    forceUpdatedFoo,
-    normOriginal,
-    "Force update doesn't change anything but date"
-  );
+  await checkUpdate(dir, "test/only.test.md", originalOnly);
+  await checkUpdate(dir, "examples/foo.test.md", originalFoo);
+  await checkUpdate(dir, "examples/foo.test.md", originalFoo, "--force");
 
   tap.end();
 }

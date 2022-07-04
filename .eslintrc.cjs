@@ -24,6 +24,7 @@ module.exports = {
         }],
         "capitalized-comments": ["error", "always", {
           "ignorePattern": "c8",
+          "ignoreConsecutiveComments": true,
         }],
       },
     },

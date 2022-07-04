@@ -260,8 +260,18 @@ Here are the currently supported tags:
 
 | Name | Meaning |
 |----- | ------- |
+| (only) | Only run this tests as well as any others marked "(only)".  Ignored if the `--force` flag is used. |
 | (skip) | Skip this test, unless the `--force` flag is used. |
 | (trace) | Turn on tracing for this test.  It is sometimes useful to trace-debug a single test at a time. |
+
+### Order of precedence
+
+Since multiple tags can be specified on a test, along with the possibility of
+the `--force` flag, here is the order of precedence, in descending order:
+
+- `--force`
+- `(skip)`
+- `(only)`
 
 [![Tests](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/hildjj/peggy-test/actions/workflows/node.js.yml)
 [![codecov](https://codecov.io/gh/hildjj/peggy-test/branch/main/graph/badge.svg?token=P7RQVIQRO1)](https://codecov.io/gh/hildjj/peggy-test)

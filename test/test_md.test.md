@@ -51,7 +51,14 @@ Output:
               line: 15,
               offset: 81
             },
-            source: 'test_md.test.md:10, offset from test start',
+            source: GrammarLocation {
+              source: 'test/test_md.test.md',
+              start: {
+                column: 1,
+                line: 11,
+                offset: 137
+              }
+            },
             start: {
               column: 1,
               line: 6,
@@ -135,10 +142,10 @@ Input to rule `tags`:
 Output:
 ```
 Error: Duplicate tag: (skip)
- --> test_md.test.md:130, offset from test start:1:1
-  |
-1 | (skip) (trace) (skip)
-  | ^^^^^^^^^^^^^^^^^^^^^
+ --> test/test_md.test.md:139:1
+    |
+139 | (skip) (trace) (skip)
+    | ^^^^^^^^^^^^^^^^^^^^^
 ```
 
 Input to rule `code`:
