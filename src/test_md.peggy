@@ -22,7 +22,7 @@ testOrText
 title = _ @$"#"+ @text nl
 
 test = input:input nl+ output:output? {
-  return {input, output, loc: location()};
+  return { input, output };
 }
 
 input = "Input" rule:rule? _ ":" tags:tags nl+ src:code {
@@ -52,16 +52,16 @@ output = "Output" _ ":" nl+ @code nl+
 // Explicitly check for null, so that we don't skip a set of ticks
 code
   = marks:backticks lang:IdentifierName? nl backticks {
-    return { marks, lang, src: null }
+    return { marks, lang, src: null, codeLocation: location() }
   }
   / marks:tildes lang:IdentifierName? nl tildes {
-    return { marks, lang, src: null }
+    return { marks, lang, src: null, codeLocation: location() }
   }
   / marks:backticks lang:IdentifierName? nl src:(@notSourceEnd nl) backticks {
-    return {marks, lang, src};
+    return {marks, lang, ...src};
   }
   / marks:tildes lang:IdentifierName? nl src:(@notTildeEnd nl) tildes {
-    return {marks, lang, src};
+    return {marks, lang, ...src};
   }
 
 backticks = "```"
@@ -69,8 +69,8 @@ tildes = "~~~"
 
 paragraph = @$(!(_ "#") (!(nl nl) .)+ nl nl+)
 
-notSourceEnd = $(!(nl "```") .)*
-notTildeEnd = $(!(nl "~~~") .)*
+notSourceEnd = src:$(!(nl "```") .)* { return { src, codeLocation: location() } }
+notTildeEnd = src:$(!(nl "~~~") .)* { return { src, codeLocation: location() } }
 
 IdentifierName "identifier"
   = $(IdentifierStart tail:IdentifierPart*)

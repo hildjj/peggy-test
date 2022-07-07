@@ -2,7 +2,7 @@
 source: ../src/test_md.peggy
 outDir: ../lib
 defaultRule: tests
-updated: 2022-06-27T21:18:08.266Z
+updated: 2022-07-07T17:07:44.199Z
 ---
 
 # Tests for the default rule
@@ -39,33 +39,53 @@ Output:
         '\n',
         {
           input: {
+            codeLocation: {
+              end: {
+                column: 4,
+                line: 8,
+                offset: 53
+              },
+              source: GrammarLocation {
+                source: 'test/test_md.test.md',
+                start: {
+                  column: 1,
+                  line: 12,
+                  offset: 147
+                }
+              },
+              start: {
+                column: 1,
+                line: 8,
+                offset: 50
+              }
+            },
             lang: null,
             marks: '```',
             rule: null,
             src: 'foo',
             tags: {}
           },
-          loc: {
-            end: {
-              column: 1,
-              line: 15,
-              offset: 81
-            },
-            source: GrammarLocation {
-              source: 'test/test_md.test.md',
+          output: {
+            codeLocation: {
+              end: {
+                column: 6,
+                line: 13,
+                offset: 76
+              },
+              source: GrammarLocation {
+                source: 'test/test_md.test.md',
+                start: {
+                  column: 1,
+                  line: 12,
+                  offset: 147
+                }
+              },
               start: {
                 column: 1,
-                line: 11,
-                offset: 137
+                line: 13,
+                offset: 71
               }
             },
-            start: {
-              column: 1,
-              line: 6,
-              offset: 39
-            }
-          },
-          output: {
             lang: null,
             marks: '```',
             src: "'foo'"
@@ -142,9 +162,9 @@ Input to rule `tags`:
 Output:
 ```
 Error: Duplicate tag: (skip)
- --> test/test_md.test.md:139:1
+ --> test/test_md.test.md:159:1
     |
-139 | (skip) (trace) (skip)
+159 | (skip) (trace) (skip)
     | ^^^^^^^^^^^^^^^^^^^^^
 ```
 
@@ -157,6 +177,26 @@ Input to rule `code`:
 Output:
 ```js
 {
+  codeLocation: {
+    end: {
+      column: 4,
+      line: 2,
+      offset: 7
+    },
+    source: GrammarLocation {
+      source: 'test/test_md.test.md',
+      start: {
+        column: 1,
+        line: 173,
+        offset: 2337
+      }
+    },
+    start: {
+      column: 1,
+      line: 1,
+      offset: 0
+    }
+  },
   lang: null,
   marks: '~~~',
   src: null
@@ -172,6 +212,26 @@ Input to rule `code`:
 Output:
 ~~~js
 {
+  codeLocation: {
+    end: {
+      column: 4,
+      line: 2,
+      offset: 7
+    },
+    source: GrammarLocation {
+      source: 'test/test_md.test.md',
+      start: {
+        column: 1,
+        line: 208,
+        offset: 2754
+      }
+    },
+    start: {
+      column: 1,
+      line: 1,
+      offset: 0
+    }
+  },
   lang: null,
   marks: '```',
   src: null
@@ -188,6 +248,26 @@ Input to rule `code`:
 Output:
 ```js
 {
+  codeLocation: {
+    end: {
+      column: 4,
+      line: 2,
+      offset: 9
+    },
+    source: GrammarLocation {
+      source: 'test/test_md.test.md',
+      start: {
+        column: 1,
+        line: 243,
+        offset: 3171
+      }
+    },
+    start: {
+      column: 1,
+      line: 2,
+      offset: 6
+    }
+  },
   lang: 'js',
   marks: '~~~',
   src: "'a'"
@@ -233,3 +313,4 @@ Output:
 ```js
 '_'
 ```
+
