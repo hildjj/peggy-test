@@ -2,7 +2,7 @@
 title: Foo
 source: foo.peggy
 outDir: .
-defaultRule: top
+defaultRule: Top
 updated: 2022-07-04T20:18:38.179Z
 ---
 
@@ -38,7 +38,7 @@ Output:
 This is why there are paragraphs.  To **explain** things.  There might be lots
 of lines that all go together.
 
-Input to rule `foo`:
+Input to rule `Foo`:
 ```
 b
 ```
@@ -50,7 +50,7 @@ Output:
 
 # Other rules
 
-Input to rule `bar`:
+Input to rule `Bar`:
 ```
 120
 ```

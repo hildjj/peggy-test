@@ -6,11 +6,10 @@
   "type": "module",
   "scripts": {
     "build": "node tools/compile.js",
-    "lint": "eslint . --ext js,mjs",
+    "lint": "eslint .",
     "test": "node test/index.test.js",
     "coverage": "c8 npm test",
-    "ci": "npm run lint && npm run coverage",
-    "start": "browser-sync start -c .bs-config.cjs"
+    "ci": "npm run lint && npm run coverage"
   },
   "bin": {
     "peggy-test": "bin/peggy-test.js"
@@ -25,19 +24,21 @@
   "author": "Joe Hildebrand <joe-github@cursive.net>",
   "license": "MIT",
   "dependencies": {
-    "commander": "9.3.0",
-    "libtap": "1.4.0",
+    "commander": "12.0.0",
+    "libtap": "1.4.1",
     "temp": "0.9.4"
   },
-  "engines": {
-    "node": ">=0.12.20"
-  },
   "devDependencies": {
-    "@peggyjs/eslint-config": "2.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.29.0",
-    "@typescript-eslint/parser": "^5.29.0",
-    "c8": "7.11.3",
-    "eslint": "8.18.0",
-    "typescript": "4.7.4"
+    "@peggyjs/eslint-config": "3.2.3",
+    "@peggyjs/eslint-plugin": "2.0.1",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "c8": "9.1.0",
+    "eslint": "8.57.0",
+    "typescript": "5.3.3"
+  },
+  "packageManager": "pnpm@8.15.4",
+  "engines": {
+    "node": ">=20.8"
   }
 }

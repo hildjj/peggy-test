@@ -1,7 +1,7 @@
 ---
 source: ../src/test_md.peggy
 outDir: ../lib
-defaultRule: tests
+defaultRule: Tests
 updated: 2022-07-07T17:07:44.199Z
 ---
 
@@ -103,7 +103,7 @@ Output:
 
 # Tests for each rule
 
-Input to rule `field`:
+Input to rule `Field`:
 ```
 Something-Here: There
 
@@ -117,7 +117,7 @@ Output:
 ]
 ```
 
-Input to rule `tags`:
+Input to rule `Tags`:
 ```
 (trace) (skip)
 ```
@@ -130,7 +130,7 @@ Output:
 }
 ```
 
-Input to rule `tags`:
+Input to rule `Tags`:
 ```
 (skip)
 ```
@@ -142,7 +142,7 @@ Output:
 }
 ```
 
-Input to rule `tags`:
+Input to rule `Tags`:
 ```
 (trace)
 ```
@@ -154,7 +154,7 @@ Output:
 }
 ```
 
-Input to rule `tags`:
+Input to rule `Tags`:
 ```
 (skip) (trace) (skip)
 ```
@@ -168,7 +168,7 @@ Error: Duplicate tag: (skip)
     | ^^^^^^^^^^^^^^^^^^^^^
 ```
 
-Input to rule `code`:
+Input to rule `Code`:
 ```
 ~~~
 ~~~
@@ -203,7 +203,7 @@ Output:
 }
 ```
 
-Input to rule `code`:
+Input to rule `Code`:
 ~~~
 ```
 ```
@@ -238,7 +238,7 @@ Output:
 }
 ~~~
 
-Input to rule `code`:
+Input to rule `Code`:
 ```
 ~~~js
 'a'
