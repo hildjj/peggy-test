@@ -13,3 +13,5 @@ node_modules/
 src/
 test/
 tools/
+.ncurc
+eslint.config.js

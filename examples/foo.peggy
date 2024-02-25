@@ -1,18 +1,21 @@
-top "default rule"
-  = foo
-  / bar
-  / ticks
-  / except
+Top "default rule"
+  = Foo
+  / Bar
+  / Ticks
+  / Except
 
-foo
+Foo
   = _ @"a"
   / _ @"b"
 
-bar
+Bar
   = n:$[0-9]+ { return BigInt(n); }
 
-ticks = "```"
+Ticks
+  = "```"
 
-except = "except" { throw new Error("boop"); }
+Except
+  = "except" { throw new Error("boop"); }
 
-_ = [ \t]*
+_
+  = [ \t]*

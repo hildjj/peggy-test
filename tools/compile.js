@@ -19,6 +19,7 @@ async function compile() {
   const grammarDest = path.resolve(__dirname, "..", "lib", "test_md.js");
   const src = await fs.readFile(grammarSource, "utf8");
   try {
+    console.log(`${grammarSource} -> ${grammarDest}`);
     const js = peggy.generate(src, {
       format: "es",
       output: "source",
