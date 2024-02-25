@@ -9,8 +9,7 @@
     "lint": "eslint .",
     "test": "node test/index.test.js",
     "coverage": "c8 npm test",
-    "ci": "npm run lint && npm run coverage",
-    "start": "browser-sync start -c .bs-config.cjs"
+    "ci": "npm run lint && npm run coverage"
   },
   "bin": {
     "peggy-test": "bin/peggy-test.js"
@@ -40,6 +39,6 @@
   },
   "packageManager": "pnpm@8.15.4",
   "engines": {
-    "node": ">=0.20.8"
+    "node": ">=20.8"
   }
 }
