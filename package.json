@@ -8,8 +8,8 @@
     "build": "node tools/compile.js",
     "lint": "eslint .",
     "test": "node test/index.test.js",
-    "coverage": "c8 npm test",
-    "ci": "npm run lint && npm run coverage"
+    "coverage": "c8 npm run test",
+    "ci": "npm run build && npm run lint && npm run coverage"
   },
   "bin": {
     "peggy-test": "bin/peggy-test.js"
