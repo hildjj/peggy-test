@@ -24,20 +24,20 @@
   "author": "Joe Hildebrand <joe-github@cursive.net>",
   "license": "MIT",
   "dependencies": {
-    "commander": "12.0.0",
+    "commander": "14.0.3",
     "libtap": "1.4.1",
     "temp": "0.9.4"
   },
   "devDependencies": {
-    "@peggyjs/eslint-config": "3.2.3",
-    "@peggyjs/eslint-plugin": "2.0.1",
-    "@typescript-eslint/eslint-plugin": "^7.0.2",
-    "@typescript-eslint/parser": "^7.0.2",
-    "c8": "9.1.0",
-    "eslint": "8.57.0",
-    "typescript": "5.3.3"
+    "@peggyjs/eslint-config": "6.0.10",
+    "@peggyjs/eslint-plugin": "2.1.2",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "eslint": "10.0.3",
+    "superc8": "12.2.4",
+    "typescript": "5.9.3"
   },
-  "packageManager": "pnpm@8.15.4",
+  "packageManager": "pnpm@10.30.3",
   "engines": {
     "node": ">=20.8"
   }
