@@ -40,6 +40,7 @@
   "packageManager": "pnpm@10.31.0",
   "pnpm": {
     "overrides": {
+      "c8@11.0.0>foreground-child": "4.0.3",
       "c8@11.0.0>yargs": "18.0.0"
     }
   },
