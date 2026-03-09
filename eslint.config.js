@@ -1,6 +1,5 @@
-import modern from "@peggyjs/eslint-config/flat/modern.js";
-import module from "@peggyjs/eslint-config/flat/module.js";
-import peggy from "@peggyjs/eslint-plugin/lib/flat/recommended.js";
+import modern from "@peggyjs/eslint-config/modern.js";
+import module from "@peggyjs/eslint-config/module.js";
 
 export default [
   {
@@ -9,19 +8,9 @@ export default [
       "lib/test_md.js",
       "test/badGenerate.peggy",
       "vendor/**",
+      "**/*.md",
     ],
   },
-  {
-    ...module,
-    ...modern,
-  },
-  peggy,
-  {
-    files: [
-      "**/*.peggy",
-    ],
-    rules: {
-      "@peggyjs/equal-next-line": ["error", "always"],
-    },
-  },
+  ...module,
+  ...modern,
 ];

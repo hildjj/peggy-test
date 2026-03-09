@@ -13,6 +13,7 @@
     "**/.{eslint,mocha}rc.{js,cjs}"
   ],
   "reporter": [
-    "lcov"
+    "lcov",
+    "text"
   ]
 }
